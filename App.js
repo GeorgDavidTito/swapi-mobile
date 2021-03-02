@@ -10,12 +10,15 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import { Provider } from 'react-redux';
 import SwapiApp from './src/app';
-import store from './src/redux/store';
+import { store, persistor } from './src/redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const App = () => {
   return (
     <Provider store={store}>
-      <SwapiApp />
+      <PersistGate loading={null} persistor={persistor}>
+        <SwapiApp />
+      </PersistGate>
     </Provider>
   );
 };

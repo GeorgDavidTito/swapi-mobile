@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaView, Text, StatusBar } from 'react-native';
+import { getShips } from '../../../redux/ships/actions';
+import { useSelector, useDispatch } from 'react-redux';
 
-const Ship = () => {
+const Ships = () => {
+  const dispatch = useDispatch();
+  const { ships } = useSelector((state) => state?.ships);
+
+  useEffect(() => {
+    dispatch(getShips());
+  }, []);
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -12,4 +21,4 @@ const Ship = () => {
   );
 };
 
-export default Ship;
+export default Ships;
