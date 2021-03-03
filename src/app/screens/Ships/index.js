@@ -1,21 +1,97 @@
-import React, { useEffect } from 'react';
-import { SafeAreaView, Text, StatusBar } from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import {
+  SafeAreaView,
+  Text,
+  StatusBar,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 import { getShips } from '../../../redux/ships/actions';
 import { useSelector, useDispatch } from 'react-redux';
+import Loading from '../../components/Loading';
+import styles from './styles';
 
-const Ships = () => {
+const Ships = (props) => {
+  const [feed, setFeed] = useState([]);
+  const [page, setPage] = useState(1);
+  const [viewable, setViewable] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+
   const dispatch = useDispatch();
-  const { ships } = useSelector((state) => state?.ships);
+  const { ships, next } = useSelector((state) => state?.ships);
+
+  const renderItem = ({ item }) => {
+    return (
+      <TouchableOpacity style={styles.shipContainer}>
+        <Text style={styles.shipContent}>{item.name}</Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const loadPage = async (pageNumber = page, shouldRefresh = false) => {
+    if (loading) {
+      return;
+    }
+    setLoading(true);
+    const pageGlobal = next?.split('=');
+
+    if (pageNumber < Number(pageGlobal?.[1]) && !shouldRefresh) {
+      await dispatch(getShips(`?page=${pageGlobal?.[1]}`));
+    } else {
+      const data = ships?.slice(pageNumber * 10, pageNumber * 10 + 10);
+      setFeed((feed) => (shouldRefresh ? data : [...feed, ...data]));
+    }
+    setPage((page) => page + 1);
+
+    setLoading(false);
+  };
+
+  const refreshList = () => {
+    setRefreshing(true);
+    setPage(0);
+    setFeed([]);
+    loadPage(0, true);
+    setRefreshing(false);
+  };
+  const handleViewableChanged = useCallback(({ changed }) => {
+    setViewable(changed.map(({ item }) => item.id));
+  }, []);
 
   useEffect(() => {
-    dispatch(getShips());
+    if (ships?.length === 0) {
+      dispatch(getShips());
+    }
   }, []);
+
+  useEffect(() => {
+    if (ships?.length > 0) {
+      setFeed(ships);
+    }
+  }, [ships]);
 
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <Text>Listado de Naves</Text>
+      <SafeAreaView style={styles.container}>
+        <FlatList
+          key="ships"
+          data={feed}
+          keyExtractor={(item) => item?.name?.toString()}
+          renderItem={renderItem}
+          // onViewableItemsChanged={handleViewableChanged}
+          viewabilityConfig={{
+            viewAreaCoveragePercentThreshold: 15,
+          }}
+          showsVerticalScrollIndicator={false}
+          onRefresh={refreshList}
+          refreshing={refreshing}
+          onEndReachedThreshold={0.5}
+          onEndReached={() => loadPage()}
+          ListFooterComponent={loading && <Loading />}
+          initialNumToRender={5}
+          maxToRenderPerBatch={2}
+        />
       </SafeAreaView>
     </>
   );

@@ -2,6 +2,8 @@ import { actionTypes } from './actions';
 
 const initialState = {
   ships: [],
+  count: null,
+  next: null,
 };
 
 function ships(state = initialState, action) {
@@ -9,7 +11,9 @@ function ships(state = initialState, action) {
     case actionTypes.FETCH_SHIPS_SUCCESS:
       return {
         ...state,
-        ships: action?.data,
+        ships: state.ships.concat(action?.data.results),
+        count: action?.data.count,
+        next: action?.data.next,
       };
     case actionTypes.FETCH_SHIPS_ERROR:
       return { ...state };

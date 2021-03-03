@@ -28,10 +28,10 @@ function loadShipsError(error) {
   };
 }
 
-export const getShips = () => async (dispatch) => {
+export const getShips = query => async (dispatch) => {
   dispatch(loadShipsRequest());
   try {
-    const response = await SwapiService.getShips();
+    const response = await SwapiService.getShips(query);
     if (response.status === 200) {
       dispatch(loadShipsSuccess(response?.data));
     } else {

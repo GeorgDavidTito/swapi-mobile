@@ -5,6 +5,7 @@ import { reactotronRedux } from 'reactotron-redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import AsyncStorage from '@react-native-community/async-storage';
 import ships from './ships/reducer';
+import pilots from './pilots/reducer';
 
 const iReactotron = Reactotron.configure({ name: 'Swapi Test' })
   .use(reactotronRedux())
@@ -12,6 +13,7 @@ const iReactotron = Reactotron.configure({ name: 'Swapi Test' })
 
 const reducers = combineReducers({
   ships,
+  pilots
 });
 
 const persistConfig = {
