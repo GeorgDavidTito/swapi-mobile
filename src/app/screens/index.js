@@ -1,21 +1,43 @@
 import * as React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import Ships from './Ships';
+import Ship from './Ship';
 import Pilots from './Pilots';
+import Pilot from './Pilot';
 
 const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
+
+const ShipsStack = ({ route, navigation }) => {
+  return (
+    <Stack.Navigator initialRouteName="Ships">
+      <Stack.Screen name="Ships" component={Ships} />
+      <Stack.Screen name="Pilots" component={Pilot} />
+    </Stack.Navigator>
+  );
+};
+
+const PilotsStack = ({ route, navigation }) => {
+  return (
+    <Stack.Navigator initialRouteName="Pilots">
+      <Stack.Screen name="Pilots" component={Pilots} />
+      <Stack.Screen name="Ships" component={Ship} />
+    </Stack.Navigator>
+  );
+};
 
 const Screens = () => {
   return (
     <Drawer.Navigator initialRouteName="Ships">
       <Drawer.Screen
         name="Ships"
-        component={Ships}
+        component={ShipsStack}
         options={{ drawerLabel: 'Listado de naves' }}
       />
       <Drawer.Screen
         name="Pilots"
-        component={Pilots}
+        component={PilotsStack}
         options={{ drawerLabel: 'Listado de Pilotos' }}
       />
       <Drawer.Screen
