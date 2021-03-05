@@ -5,6 +5,7 @@ import Ships from './Ships';
 import Ship from './Ship';
 import Pilots from './Pilots';
 import Pilot from './Pilot';
+import { Text } from 'react-native';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -12,8 +13,31 @@ const Stack = createStackNavigator();
 const ShipsStack = ({ route, navigation }) => {
   return (
     <Stack.Navigator initialRouteName="Ships">
-      <Stack.Screen name="Ships" component={Ships} />
-      <Stack.Screen name="Pilots" component={Pilot} />
+      <Stack.Screen
+        name="Ships"
+        component={Ships}
+        options={{
+          headerStyle: { backgroundColor: 'black' },
+          headerTitle: (
+            <Text style={{ fontSize: 24, color: 'rgb(255,232,31)' }}>
+              Star Wars: Naves
+            </Text>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Ship"
+        component={Ship}
+        options={{
+          headerStyle: { backgroundColor: 'black' },
+          headerTitle: (
+            <Text style={{ fontSize: 24, color: 'rgb(255,232,31)' }}>
+              Star Wars: Bio-Nave
+            </Text>
+          ),
+          headerTintColor: 'rgb(255,232,31)',
+        }}
+      />
     </Stack.Navigator>
   );
 };
@@ -21,15 +45,47 @@ const ShipsStack = ({ route, navigation }) => {
 const PilotsStack = ({ route, navigation }) => {
   return (
     <Stack.Navigator initialRouteName="Pilots">
-      <Stack.Screen name="Pilots" component={Pilots} />
-      <Stack.Screen name="Ships" component={Ship} />
+      <Stack.Screen
+        name="Pilots"
+        component={Pilots}
+        options={{
+          headerStyle: { backgroundColor: 'black' },
+          headerTitle: (
+            <Text style={{ fontSize: 24, color: 'rgb(255,232,31)' }}>
+              Star Wars: Pilotos
+            </Text>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Pilot"
+        component={Pilot}
+        options={{
+          headerStyle: { backgroundColor: 'black' },
+          headerTitle: (
+            <Text style={{ fontSize: 24, color: 'rgb(255,232,31)' }}>
+              Star Wars: Bio-Piloto
+            </Text>
+          ),
+          headerTintColor: 'rgb(255,232,31)',
+        }}
+      />
     </Stack.Navigator>
   );
 };
 
 const Screens = () => {
   return (
-    <Drawer.Navigator initialRouteName="Ships">
+    <Drawer.Navigator
+      initialRouteName="Ships"
+      drawerStyle={{
+        backgroundColor: 'black',
+        color: 'white',
+      }}
+      drawerContentOptions={{
+        activeTintColor: 'rgb(255,232,31)',
+        inactiveTintColor: 'rgb(255,232,31)',
+      }}>
       <Drawer.Screen
         name="Ships"
         component={ShipsStack}
@@ -43,12 +99,7 @@ const Screens = () => {
       <Drawer.Screen
         name="PilotsShip"
         component={Pilots}
-        options={{ drawerLabel: 'Piloto/Naves' }}
-      />
-      <Drawer.Screen
-        name="ShipPilots"
-        component={Pilots}
-        options={{ drawerLabel: 'Nave/Pilotos' }}
+        options={{ drawerLabel: 'Recomendacion de peliculas' }}
       />
     </Drawer.Navigator>
   );
