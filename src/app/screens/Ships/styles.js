@@ -4,12 +4,11 @@ let { width } = Dimensions.get('window');
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-    alignItems: 'center',
+    backgroundColor: 'black',
   },
   shipContainer: {
     justifyContent: 'center',
-    paddingVertical: 24,
+    paddingVertical: 4,
     shadowColor: '#000000',
     shadowOffset: {
       width: 0,
@@ -17,11 +16,22 @@ export default StyleSheet.create({
     },
     shadowRadius: 3,
     shadowOpacity: 0.5,
-    height: 70,
+    height: 40,
     width: width - 30,
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: 'black',
     borderRadius: 6,
-    margin: 4,
+    marginHorizontal: 4,
+    marginVertical: 16,
+  },
+  shipContent: {
+    fontSize: 24,
+    color: 'rgb(255,232,31)',
+  },
+  image: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

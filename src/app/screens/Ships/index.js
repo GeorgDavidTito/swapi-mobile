@@ -5,10 +5,12 @@ import {
   StatusBar,
   FlatList,
   TouchableOpacity,
+  ImageBackground,
 } from 'react-native';
 import { getShips } from '../../../redux/ships/actions';
 import { useSelector, useDispatch } from 'react-redux';
 import Loading from '../../components/Loading';
+import mainImage from '../../../assets/shipsBackground.jpg';
 import styles from './styles';
 
 const Ships = (props) => {
@@ -23,7 +25,9 @@ const Ships = (props) => {
 
   const renderItem = ({ item }) => {
     return (
-      <TouchableOpacity style={styles.shipContainer}>
+      <TouchableOpacity
+        style={styles.shipContainer}
+        onPress={() => props.navigation.navigate('Ship', { item })}>
         <Text style={styles.shipContent}>{item.name}</Text>
       </TouchableOpacity>
     );
@@ -74,24 +78,26 @@ const Ships = (props) => {
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.container}>
-        <FlatList
-          key="ships"
-          data={feed}
-          keyExtractor={(item) => item?.name?.toString()}
-          renderItem={renderItem}
-          // onViewableItemsChanged={handleViewableChanged}
-          viewabilityConfig={{
-            viewAreaCoveragePercentThreshold: 15,
-          }}
-          showsVerticalScrollIndicator={false}
-          onRefresh={refreshList}
-          refreshing={refreshing}
-          onEndReachedThreshold={0.5}
-          onEndReached={() => loadPage()}
-          ListFooterComponent={loading && <Loading />}
-          initialNumToRender={5}
-          maxToRenderPerBatch={2}
-        />
+        <ImageBackground source={mainImage} style={styles.image}>
+          <FlatList
+            key="ships"
+            data={feed}
+            keyExtractor={(item) => item?.name?.toString()}
+            renderItem={renderItem}
+            // onViewableItemsChanged={handleViewableChanged}
+            viewabilityConfig={{
+              viewAreaCoveragePercentThreshold: 15,
+            }}
+            showsVerticalScrollIndicator={false}
+            onRefresh={refreshList}
+            refreshing={refreshing}
+            onEndReachedThreshold={0.5}
+            onEndReached={() => loadPage()}
+            ListFooterComponent={loading && <Loading />}
+            initialNumToRender={5}
+            maxToRenderPerBatch={2}
+          />
+        </ImageBackground>
       </SafeAreaView>
     </>
   );
