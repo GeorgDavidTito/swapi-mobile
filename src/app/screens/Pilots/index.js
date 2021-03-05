@@ -1,7 +1,15 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { SafeAreaView, Text, StatusBar, FlatList, TouchableOpacity } from 'react-native';
+import {
+  SafeAreaView,
+  Text,
+  StatusBar,
+  FlatList,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
 import { getPilots } from '../../../redux/pilots/actions';
 import { useSelector, useDispatch } from 'react-redux';
+import mainImage from '../../../assets/pilotsBackground.jpg';
 import Loading from '../../components/Loading';
 import styles from './styles';
 
@@ -17,13 +25,15 @@ const Pilots = (props) => {
 
   const renderItem = ({ item }) => {
     return (
-      <TouchableOpacity style={styles.pilotsContainer}>
-        <Text style={styles.shipContent}>{item.name}</Text>
+      <TouchableOpacity
+        style={styles.pilotsContainer}
+        onPress={() => props.navigation.navigate('Pilot', { item })}>
+        <Text style={styles.pilotContent}>{item.name}</Text>
       </TouchableOpacity>
     );
   };
 
-  const  loadPage = async (pageNumber = page, shouldRefresh = false) => {
+  const loadPage = async (pageNumber = page, shouldRefresh = false) => {
     if (loading) {
       return;
     }
@@ -68,24 +78,26 @@ const Pilots = (props) => {
     <>
       <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.container}>
-        <FlatList
-          key="pilots"
-          data={feed}
-          keyExtractor={(item) => item?.name?.toString()}
-          renderItem={renderItem}
-          // onViewableItemsChanged={handleViewableChanged}
-          viewabilityConfig={{
-            viewAreaCoveragePercentThreshold: 15,
-          }}
-          showsVerticalScrollIndicator={false}
-          onRefresh={refreshList}
-          refreshing={refreshing}
-          onEndReachedThreshold={0.5}
-          onEndReached={() => loadPage()}
-          ListFooterComponent={loading && <Loading />}
-          initialNumToRender={5}
-          maxToRenderPerBatch={2}
-        />
+        <ImageBackground source={mainImage} style={styles.image}>
+          <FlatList
+            key="pilots"
+            data={feed}
+            keyExtractor={(item) => item?.name?.toString()}
+            renderItem={renderItem}
+            // onViewableItemsChanged={handleViewableChanged}
+            viewabilityConfig={{
+              viewAreaCoveragePercentThreshold: 15,
+            }}
+            showsVerticalScrollIndicator={false}
+            onRefresh={refreshList}
+            refreshing={refreshing}
+            onEndReachedThreshold={0.5}
+            onEndReached={() => loadPage()}
+            ListFooterComponent={loading && <Loading />}
+            initialNumToRender={5}
+            maxToRenderPerBatch={2}
+          />
+        </ImageBackground>
       </SafeAreaView>
     </>
   );
