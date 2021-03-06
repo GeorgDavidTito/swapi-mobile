@@ -5,6 +5,7 @@ import Ships from './Ships';
 import Ship from './Ship';
 import Pilots from './Pilots';
 import Pilot from './Pilot';
+import Films from './Films';
 import { Text } from 'react-native';
 
 const Drawer = createDrawerNavigator();
@@ -19,10 +20,18 @@ const ShipsStack = ({ route, navigation }) => {
         options={{
           headerStyle: { backgroundColor: 'black' },
           headerTitle: (
-            <Text style={{ fontSize: 24, color: 'rgb(255,232,31)' }}>
+            <Text
+              style={{
+                fontSize: 24,
+                color: 'rgb(255,232,31)',
+                alignSelf: 'center',
+              }}>
               Star Wars: Naves
             </Text>
           ),
+          headerTitleStyle: {
+            alignSelf: 'center',
+          },
         }}
       />
       <Stack.Screen
@@ -31,10 +40,18 @@ const ShipsStack = ({ route, navigation }) => {
         options={{
           headerStyle: { backgroundColor: 'black' },
           headerTitle: (
-            <Text style={{ fontSize: 24, color: 'rgb(255,232,31)' }}>
+            <Text
+              style={{
+                fontSize: 24,
+                color: 'rgb(255,232,31)',
+                textAlign: 'center',
+              }}>
               Star Wars: Bio-Nave
             </Text>
           ),
+          headerTitleStyle: {
+            alignSelf: 'center',
+          },
           headerTintColor: 'rgb(255,232,31)',
         }}
       />
@@ -44,10 +61,18 @@ const ShipsStack = ({ route, navigation }) => {
         options={{
           headerStyle: { backgroundColor: 'black' },
           headerTitle: (
-            <Text style={{ fontSize: 24, color: 'rgb(255,232,31)' }}>
+            <Text
+              style={{
+                fontSize: 24,
+                color: 'rgb(255,232,31)',
+                textAlign: 'center',
+              }}>
               Star Wars: Bio-Piloto
             </Text>
           ),
+          headerTitleStyle: {
+            alignSelf: 'center',
+          },
           headerTintColor: 'rgb(255,232,31)',
         }}
       />
@@ -64,10 +89,18 @@ const PilotsStack = ({ route, navigation }) => {
         options={{
           headerStyle: { backgroundColor: 'black' },
           headerTitle: (
-            <Text style={{ fontSize: 24, color: 'rgb(255,232,31)' }}>
+            <Text
+              style={{
+                fontSize: 24,
+                color: 'rgb(255,232,31)',
+                textAlign: 'center',
+              }}>
               Star Wars: Pilotos
             </Text>
           ),
+          headerTitleStyle: {
+            alignSelf: 'center',
+          },
         }}
       />
       <Stack.Screen
@@ -76,23 +109,39 @@ const PilotsStack = ({ route, navigation }) => {
         options={{
           headerStyle: { backgroundColor: 'black' },
           headerTitle: (
-            <Text style={{ fontSize: 24, color: 'rgb(255,232,31)' }}>
+            <Text
+              style={{
+                fontSize: 24,
+                color: 'rgb(255,232,31)',
+                textAlign: 'center',
+              }}>
               Star Wars: Bio-Piloto
             </Text>
           ),
+          headerTitleStyle: {
+            alignSelf: 'center',
+          },
           headerTintColor: 'rgb(255,232,31)',
         }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="Ship"
         component={Ship}
         options={{
           headerStyle: { backgroundColor: 'black' },
           headerTitle: (
-            <Text style={{ fontSize: 24, color: 'rgb(255,232,31)' }}>
+            <Text
+              style={{
+                fontSize: 24,
+                color: 'rgb(255,232,31)',
+                textAlign: 'center',
+              }}>
               Star Wars: Bio-Nave
             </Text>
           ),
+          headerTitleStyle: {
+            alignSelf: 'center',
+          },
           headerTintColor: 'rgb(255,232,31)',
         }}
       />
@@ -123,8 +172,8 @@ const Screens = () => {
         options={{ drawerLabel: 'Listado de Pilotos' }}
       />
       <Drawer.Screen
-        name="PilotsShip"
-        component={Pilots}
+        name="Films"
+        component={Films}
         options={{ drawerLabel: 'Recomendacion de peliculas' }}
       />
     </Drawer.Navigator>

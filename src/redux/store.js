@@ -8,6 +8,7 @@ import ships from './ships/reducer';
 import pilots from './pilots/reducer';
 import shipPilots from './shipPilots/reducer';
 import pilotShips from './pilotShips/reducer';
+import films from './films/reducer';
 
 const iReactotron = Reactotron.configure({ name: 'Swapi Test' })
   .use(reactotronRedux())
@@ -18,6 +19,7 @@ const reducers = combineReducers({
   pilots,
   shipPilots,
   pilotShips,
+  films,
 });
 
 const persistConfig = {
