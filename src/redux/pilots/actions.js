@@ -33,7 +33,6 @@ export const getPilots = query => async (dispatch) => {
   try {
     const response = await SwapiService.getPilots(query);
     if (response.status === 200) {
-      console.log('response', response.status);
       dispatch(loadPilotsSuccess(response?.data));
     } else {
       dispatch(loadPilotsError(response.error));

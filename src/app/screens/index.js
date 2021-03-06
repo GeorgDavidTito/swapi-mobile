@@ -38,6 +38,19 @@ const ShipsStack = ({ route, navigation }) => {
           headerTintColor: 'rgb(255,232,31)',
         }}
       />
+      <Stack.Screen
+        name="Pilot"
+        component={Pilot}
+        options={{
+          headerStyle: { backgroundColor: 'black' },
+          headerTitle: (
+            <Text style={{ fontSize: 24, color: 'rgb(255,232,31)' }}>
+              Star Wars: Bio-Piloto
+            </Text>
+          ),
+          headerTintColor: 'rgb(255,232,31)',
+        }}
+      />
     </Stack.Navigator>
   );
 };
@@ -65,6 +78,19 @@ const PilotsStack = ({ route, navigation }) => {
           headerTitle: (
             <Text style={{ fontSize: 24, color: 'rgb(255,232,31)' }}>
               Star Wars: Bio-Piloto
+            </Text>
+          ),
+          headerTintColor: 'rgb(255,232,31)',
+        }}
+      />
+       <Stack.Screen
+        name="Ship"
+        component={Ship}
+        options={{
+          headerStyle: { backgroundColor: 'black' },
+          headerTitle: (
+            <Text style={{ fontSize: 24, color: 'rgb(255,232,31)' }}>
+              Star Wars: Bio-Nave
             </Text>
           ),
           headerTintColor: 'rgb(255,232,31)',
