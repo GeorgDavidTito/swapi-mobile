@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   SafeAreaView,
   Text,
@@ -7,9 +7,21 @@ import {
   ScrollView,
 } from 'react-native';
 import styles from './styles';
+import { getShipPilots } from '../../../redux/shipPilots/actions';
+import { useDispatch } from 'react-redux';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import ShipPilots from './ShipPilots';
 
 const Ship = (props) => {
+  let refRBSheet = useRef();
+  const dispatch = useDispatch();
+
   const { item } = props.route.params;
+
+  const handleGetPilots = () => {
+    refRBSheet.current.open();
+    dispatch(getShipPilots(item.pilots));
+  };
 
   return (
     <>
@@ -28,9 +40,27 @@ const Ship = (props) => {
           </Text>
           <Text style={styles.text}>Longitud: {item.length}</Text>
           <Text style={styles.text}>Tripulacion: {item.crew}</Text>
-          <TouchableOpacity style={styles.linkContainer}>
-            <Text style={styles.link}>Ver Pilotos</Text>
-          </TouchableOpacity>
+          {item.pilots.length > 0 && (
+            <TouchableOpacity
+              style={styles.linkContainer}
+              onPress={handleGetPilots}>
+              <Text style={styles.link}>Ver Pilotos</Text>
+            </TouchableOpacity>
+          )}
+          <RBSheet
+            ref={refRBSheet}
+            openDuration={250}
+            height={400}
+            duration={250}
+            customStyles={{
+              container: {
+                borderTopLeftRadius: 20,
+                borderTopRightRadius: 20,
+                backgroundColor: '#0D0D0D',
+              },
+            }}>
+            <ShipPilots navigation={props.navigation} refRBSheet={refRBSheet} />
+          </RBSheet>
         </ScrollView>
       </SafeAreaView>
     </>
