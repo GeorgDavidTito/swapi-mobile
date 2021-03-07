@@ -22,12 +22,12 @@ function films(state = initialState, action) {
       };
     case actionTypes.FETCH_FILMS_ERROR:
       return { ...state };
-    case actionTypes.FETCH_SEARCH_BY_PILOT_SUCCESS:
+    case actionTypes.FETCH_SEARCH_SUCCESS:
       return {
         ...state,
         films: action?.data,
       };
-    case actionTypes.FETCH_SEARCH_BY_PILOT_ERROR:
+    case actionTypes.FETCH_SEARCH_ERROR:
       return { ...state, searchSuccess: null };
     default:
       return state;

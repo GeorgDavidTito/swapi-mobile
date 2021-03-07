@@ -5,9 +5,9 @@ export const actionTypes = {
   FETCH_FILMS_SUCCESS: 'FETCH_FILMS_SUCCESS',
   FETCH_FILMS_ERROR: 'FETCH_FILMS_ERROR',
 
-  FETCH_SEARCH_BY_PILOT_REQUEST: 'FETCH_SEARCH_BY_PILOT_REQUEST',
-  FETCH_SEARCH_BY_PILOT_SUCCESS: 'FETCH_SEARCH_BY_PILOT_SUCCESS',
-  FETCH_SEARCH_BY_PILOT_ERROR: 'FETCH_SEARCH_BY_PILOT_ERROR',
+  FETCH_SEARCH_REQUEST: 'FETCH_SEARCH_REQUEST',
+  FETCH_SEARCH_SUCCESS: 'FETCH_SEARCH_SUCCESS',
+  FETCH_SEARCH_ERROR: 'FETCH_SEARCH_ERROR',
 
   FETCH_FILMS_RESET: 'FETCH_FILMS_RESET',
 };
@@ -41,23 +41,23 @@ function loadFilmsReset() {
   };
 }
 
-function loadSearchByPilotRequest() {
+function loadSearchRequest() {
   return {
-    type: actionTypes.FETCH_SEARCH_BY_PILOT_REQUEST,
+    type: actionTypes.FETCH_SEARCH_REQUEST,
   };
 }
 
-function loadSearchByPilotSuccess(results) {
+function loadSearchSuccess(results) {
   return {
-    type: actionTypes.FETCH_SEARCH_BY_PILOT_SUCCESS,
+    type: actionTypes.FETCH_SEARCH_SUCCESS,
     data: results,
     error: null,
   };
 }
 
-function loadSearchByPilotError(error) {
+function loadSearchError(error) {
   return {
-    type: actionTypes.FETCH_SEARCH_BY_PILOT_ERROR,
+    type: actionTypes.FETCH_SEARCH_ERROR,
     data: null,
     error: error,
   };
@@ -78,7 +78,7 @@ export const getFilms = (query) => async (dispatch) => {
 };
 
 export const getSearch = (query) => async (dispatch) => {
-  dispatch(loadSearchByPilotRequest());
+  dispatch(loadSearchRequest());
   try {
 
     const response = await SwapiService.getPilots(query);
@@ -91,7 +91,7 @@ export const getSearch = (query) => async (dispatch) => {
           });
         }),
       );
-      await dispatch(loadSearchByPilotSuccess(responseFilms));
+      await dispatch(loadSearchSuccess(responseFilms));
     } else if (response.status === 200 && response.data.count === 0) {
       const responseShip = await SwapiService.getShips(query);
       if (responseShip.status === 200 && responseShip.data?.count > 0) {
@@ -103,17 +103,17 @@ export const getSearch = (query) => async (dispatch) => {
             });
           }),
         );
-        await dispatch(loadSearchByPilotSuccess(responseFilms));
+        await dispatch(loadSearchSuccess(responseFilms));
       } else {
         dispatch(loadFilmsReset());
       }
     } else {
       dispatch(loadFilmsReset());
-      dispatch(loadSearchByPilotError(response.error));
+      dispatch(loadSearchError(response.error));
     }
   } catch (error) {
     dispatch(
-      loadSearchByPilotError('No pudimos obtener la lista de peliculas'),
+      loadSearchError('No pudimos obtener la lista de peliculas'),
     );
   }
 };
